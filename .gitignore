@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Build output
+build/
+dist/
+*.spec.bak
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Downloads made while testing
+Downloads/
+*.mp4
+*.mp3
+*.part
+*.ytdl

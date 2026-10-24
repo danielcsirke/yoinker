@@ -1,0 +1,97 @@
+Yoinker
+Copyright (c) 2026 Daniel Csirke. All rights reserved.
+
+(A Hungarian version follows below. / A magyar változat lejjebb található.
+ The English text is the binding one. / Az angol szöveg az irányadó.)
+
+----------------------------------------------------------------------
+ENGLISH
+----------------------------------------------------------------------
+
+This software, its source code, documentation, graphics and any other
+accompanying material (together: the "Software") are the property of
+Daniel Csirke (the "Author") and are protected by copyright law.
+
+1. WHAT YOU MAY DO
+   You may download, install and run the Software, free of charge,
+   for your own personal, non-commercial use, on any number of
+   computers that you own or control.
+
+2. WHAT YOU MAY NOT DO WITHOUT WRITTEN PERMISSION
+   Except as allowed above, you may not copy, modify, merge, publish,
+   distribute, sublicense, sell, rent, lease or lend the Software or
+   any part of it, nor remove or alter any copyright notice. You may
+   not use the Software or any part of its source code in another
+   product, project or service.
+
+3. YOUR RESPONSIBILITY
+   You alone are responsible for how you use the Software. Only
+   download content that you have the right to download. The Author
+   does not operate, control or endorse any website the Software can
+   be pointed at.
+
+4. NO WARRANTY
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+   NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+   CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM OR IN CONNECTION
+   WITH THE SOFTWARE OR ITS USE.
+
+5. THIRD-PARTY COMPONENTS
+   The Software uses yt-dlp (The Unlicense), FFmpeg (LGPL/GPL, as
+   shipped by imageio-ffmpeg) and Python (PSF License). These remain
+   under their own licenses, which are not changed by this document.
+   See THIRD_PARTY_NOTICES.md.
+
+6. TERMINATION
+   This permission ends automatically if you break any of these terms.
+
+----------------------------------------------------------------------
+MAGYAR
+----------------------------------------------------------------------
+
+Yoinker
+Copyright (c) 2026 Csirke Dániel. Minden jog fenntartva.
+
+Ez a szoftver, a forráskódja, a dokumentációja, a grafikái és minden
+egyéb hozzá tartozó anyag (együtt: a "Szoftver") Csirke Dániel (a
+"Szerző") tulajdona, és szerzői jogi védelem alatt áll.
+
+1. AMIT SZABAD
+   A Szoftvert ingyenesen letöltheted, telepítheted és futtathatod
+   saját, személyes, nem kereskedelmi célra, tetszőleges számú olyan
+   számítógépen, amely a tiéd vagy a te kezelésedben áll.
+
+2. AMIT ÍRÁSOS ENGEDÉLY NÉLKÜL NEM SZABAD
+   A fentieken kívül a Szoftvert vagy bármely részét nem másolhatod,
+   módosíthatod, egyesítheted, teheted közzé, terjesztheted, adhatod
+   tovább allicencbe, értékesítheted, adhatod bérbe vagy kölcsön, és
+   nem távolíthatod el vagy változtathatod meg a szerzői jogi
+   megjelöléseket. A Szoftvert vagy forráskódjának bármely részét nem
+   használhatod fel más termékben, projektben vagy szolgáltatásban.
+
+3. A TE FELELŐSSÉGED
+   Kizárólag te felelsz azért, hogyan használod a Szoftvert. Csak
+   olyan tartalmat tölts le, amelyre jogosult vagy. A Szerző nem
+   üzemelteti, nem ellenőrzi és nem támogatja egyik olyan weboldalt
+   sem, amelyre a Szoftver irányítható.
+
+4. GARANCIA KIZÁRÁSA
+   A SZOFTVER "ADOTT ÁLLAPOTBAN" KERÜL ÁTADÁSRA, BÁRMIFÉLE KIFEJEZETT
+   VAGY HALLGATÓLAGOS GARANCIA NÉLKÜL, IDEÉRTVE TÖBBEK KÖZÖTT AZ
+   ELADHATÓSÁGRA, AZ ADOTT CÉLRA VALÓ ALKALMASSÁGRA ÉS A
+   JOGTISZTASÁGRA VONATKOZÓ GARANCIÁKAT IS. A SZERZŐ SEMMILYEN ESETBEN
+   NEM FELEL A SZOFTVERBŐL VAGY ANNAK HASZNÁLATÁBÓL EREDŐ VAGY AZZAL
+   ÖSSZEFÜGGŐ IGÉNYÉRT, KÁRÉRT VAGY EGYÉB FELELŐSSÉGÉRT.
+
+5. HARMADIK FÉLTŐL SZÁRMAZÓ ÖSSZETEVŐK
+   A Szoftver a yt-dlp (Unlicense), az FFmpeg (LGPL/GPL, az
+   imageio-ffmpeg csomagban szállított változat) és a Python (PSF
+   licenc) programokat használja. Ezek a saját licencük alatt
+   maradnak, amelyet ez a dokumentum nem módosít. Lásd:
+   THIRD_PARTY_NOTICES.md.
+
+6. MEGSZŰNÉS
+   Ez az engedély automatikusan megszűnik, ha a fenti feltételek
+   bármelyikét megszeged.
