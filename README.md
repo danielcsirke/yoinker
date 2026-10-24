@@ -2,7 +2,7 @@
 
 **Download videos and music from the internet with one button. No setup, no typing, no "terminal".**
 
-🇭🇺 [Magyar leírás itt](README.hu.md)
+🇭🇺 [Magyar leírás itt](README.hu.md) · 🌐 **Hungarian step-by-step page with pictures: https://danielcsirke.github.io/yoinker/**
 
 ![Three steps: paste the link, choose video or music, press DOWNLOAD](docs/img/window.svg)
 

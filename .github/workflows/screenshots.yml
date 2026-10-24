@@ -1,0 +1,25 @@
+# Takes the Hungarian screenshots for the GitHub Pages site under Xvfb.
+# Run it by hand (Actions -> Screenshots -> Run workflow), download the
+# artifact, and commit the PNGs into docs/img/hu/.
+
+name: Screenshots
+
+on:
+  workflow_dispatch:
+
+jobs:
+  shoot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: sudo apt-get install -y -qq xvfb fonts-dejavu-core
+      - run: pip install -e . pillow
+      - name: Take screenshots
+        run: xvfb-run -a -s "-screen 0 1000x900x24" python scripts/screenshots.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-hu
+          path: docs/img/hu/*.png

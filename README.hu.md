@@ -4,6 +4,8 @@
 
 🇬🇧 [English description here](README.md)
 
+> 👉 **A legegyszerűbb: nyisd meg ezt az oldalt, képekkel, lépésről lépésre: https://danielcsirke.github.io/yoinker/** — telefonon is jól olvasható.
+
 ![Három lépés: link beillesztése, videó vagy zene kiválasztása, LETÖLTÉS gomb](docs/img/window.svg)
 
 ---

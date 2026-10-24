@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yoinker – videó és zene letöltése egy gombbal</title>
+<meta name="description" content="Yoinker: ingyenes program Windowsra, Macre és Linuxra, amivel egy gombnyomással letölthetsz videót vagy zenét. Lépésről lépésre, képekkel.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232a6fdb'/%3E%3Ctext x='50' y='72' font-size='60' text-anchor='middle' fill='white'%3E%E2%AC%87%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1a1a; --muted: #555; --accent: #2a6fdb; --accent-fg: #fff;
+    --card: #f4f6fa; --line: #d9dee7; --warn-bg: #fff6d6; --warn-line: #e5c457; --ok: #2e8b57;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141618; --fg: #ececec; --muted: #b5b5b5; --accent: #5b93ea; --accent-fg: #fff;
+      --card: #1f2327; --line: #343a42; --warn-bg: #3a3214; --warn-line: #8a7422; --ok: #5dbb84;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141618; --fg: #ececec; --muted: #b5b5b5; --accent: #5b93ea; --accent-fg: #fff;
+    --card: #1f2327; --line: #343a42; --warn-bg: #3a3214; --warn-line: #8a7422; --ok: #5dbb84;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 112.5%; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.55; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 16px 64px; }
+  header { text-align: center; padding: 40px 0 16px; }
+  header h1 { font-size: 2.4rem; margin: 0 0 8px; }
+  header p.lead { font-size: 1.25rem; color: var(--muted); margin: 0 0 20px; }
+  .btn { display: inline-block; background: var(--accent); color: var(--accent-fg); text-decoration: none; font-weight: 700; font-size: 1.2rem; padding: 16px 28px; border-radius: 12px; border: 0; cursor: pointer; }
+  .btn:active { transform: translateY(1px); }
+  .btn.small { font-size: 1rem; padding: 10px 18px; }
+  .detect { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin: 18px 0 8px; font-size: 1.05rem; }
+  nav.os { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 18px 0 28px; }
+  nav.os a { display: block; text-align: center; padding: 12px 6px; border: 2px solid var(--line); border-radius: 12px; color: var(--fg); text-decoration: none; font-weight: 600; background: var(--card); }
+  nav.os a .ico { display: block; font-size: 1.6rem; }
+  nav.os a.active { border-color: var(--accent); }
+  @media (max-width: 480px) { nav.os { grid-template-columns: repeat(2, 1fr); } html { font-size: 106%; } header h1 { font-size: 2rem; } }
+  section { margin: 0 0 40px; scroll-margin-top: 12px; }
+  h2 { font-size: 1.7rem; margin: 36px 0 12px; padding-top: 12px; border-top: 3px solid var(--accent); }
+  h3 { font-size: 1.25rem; margin: 26px 0 8px; }
+  ol.steps { padding-left: 0; list-style: none; counter-reset: s; margin: 0; }
+  ol.steps > li { counter-increment: s; position: relative; padding: 0 0 18px 58px; min-height: 48px; }
+  ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: var(--accent-fg); font-weight: 800; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; }
+  ol.steps strong { font-size: 1.08rem; }
+  figure { margin: 12px 0 6px; }
+  figure img { display: block; width: 100%; height: auto; max-width: 600px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+  figcaption { font-size: 0.9rem; color: var(--muted); margin-top: 6px; }
+  .warn { background: var(--warn-bg); border: 1px solid var(--warn-line); border-radius: 10px; padding: 12px 14px; margin: 10px 0; }
+  .ok { color: var(--ok); font-weight: 700; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--card); padding: 1px 6px; border-radius: 5px; font-size: 0.95em; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.98rem; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  @media (max-width: 560px) {
+    table, thead, tbody, tr, th, td { display: block; }
+    thead { display: none; }
+    tr { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; margin: 0 0 10px; }
+    td { border: 0; padding: 4px 0; }
+    td:first-child { font-weight: 700; }
+    td:last-child::before { content: "Mit csinálj: "; color: var(--muted); }
+  }
+  footer { color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 18px; margin-top: 48px; }
+  .hidden { display: none; }
+  .pill { display: inline-block; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; font-size: 0.9rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Yoinker</h1>
+  <p class="lead">Videó vagy zene letöltése az internetről. <br>Bemásolod a linket, megnyomsz egy gombot, kész.</p>
+  <a class="btn" href="https://github.com/danielcsirke/yoinker/releases/latest" id="dl-top">⬇ Letöltés (ingyenes)</a>
+  <p style="margin-top:10px"><span class="pill">Windows</span> <span class="pill">Mac</span> <span class="pill">Linux</span> <span class="pill">Androidra: lásd lent</span></p>
+  <div class="detect" id="detect" hidden></div>
+</header>
+
+<nav class="os" aria-label="Rendszer választás">
+  <a href="#windows" data-os="windows"><span class="ico">🪟</span>Windows</a>
+  <a href="#mac" data-os="mac"><span class="ico">🍎</span>Mac</a>
+  <a href="#linux" data-os="linux"><span class="ico">🐧</span>Linux</a>
+  <a href="#android" data-os="android"><span class="ico">🤖</span>Android / telefon</a>
+</nav>
+
+<section id="mi-ez">
+  <h2>Mi ez?</h2>
+  <p>A Yoinker egy kis ingyenes program. Megnyitod, beilleszted egy videó linkjét (például YouTube-ról), és megnyomod a nagy <strong>LETÖLTÉS</strong> gombot. A videó – vagy ha úgy akarod, csak a zenéje MP3-ban – lekerül a gépedre, a Letöltések mappába.</p>
+  <p>Nem kell hozzá semmit telepíteni, nem kell fiók, nincs reklám, és nem gépelsz semmilyen parancsot. Magyarul beszél.</p>
+  <figure>
+    <img src="img/hu/01_ures.png" alt="A Yoinker ablaka: három számozott lépés és egy nagy LETÖLTÉS gomb" loading="lazy">
+    <figcaption>Így néz ki. Ennyi az egész program.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================ WINDOWS ============================ -->
+<section id="windows">
+  <h2>🪟 Windows – letöltés és indítás</h2>
+  <ol class="steps">
+    <li><strong>Kattints a kék Letöltés gombra</strong> az oldal tetején. Egy angol nyelvű oldal nyílik meg, ez a program „letöltőhelye”.</li>
+    <li><strong>Görgess le az <em>Assets</em> szóig,</strong> és kattints a <code>Yoinker-Windows.exe</code> fájlra. Pár másodperc alatt letöltődik.
+      <figure><img src="img/hu/github_letoltes.svg" alt="A letöltő oldal: az Assets lista, bekeretezve a Yoinker-Windows.exe" loading="lazy"><figcaption>Csak ez az egy sor kell. A többi fájl Macre és Linuxra való.</figcaption></figure>
+    </li>
+    <li><strong>Nyisd meg a Letöltések mappát,</strong> és kattints duplán a <code>Yoinker-Windows.exe</code> fájlra.</li>
+    <li><strong>Jön egy kék ablak: „A Windows megvédte a számítógépet”.</strong> Ez <u>nem hiba</u> – a Windows minden olyan kis programnál kiírja, amit nem a Microsoft áruházából vettél.<br>
+      Kattints a kis <strong>További információ</strong> szövegre, utána a <strong>Futtatás mindenképp</strong> gombra.
+      <figure><img src="img/hu/win_smartscreen.svg" alt="A Windows kék figyelmeztető ablaka: 1. További információ, 2. Futtatás mindenképp" loading="lazy"><figcaption>1. „További információ”, 2. „Futtatás mindenképp”. Csak az első indításkor kérdezi.</figcaption></figure>
+    </li>
+    <li><strong>Kész, megnyílt a Yoinker.</strong> Nincs telepítő, nincs „tovább-tovább-befejezés”.<br>
+      <span class="pill">Tipp</span> Húzd ki a <code>Yoinker-Windows.exe</code> fájlt a Letöltésekből az Asztalra, hogy legközelebb egyből megtaláld.</li>
+  </ol>
+  <div class="warn"><strong>A vírusirtó törölte a fájlt?</strong> Néhány vírusirtó mindenre gyanakszik, ami nem világhírű. Állítsd vissza a karanténból, vagy szólj annak, akitől a Yoinkert kaptad.</div>
+  <p><a class="btn small" href="#hasznalat">Tovább: hogyan töltsek le vele? ↓</a></p>
+</section>
+
+<!-- ============================ MAC ============================ -->
+<section id="mac">
+  <h2>🍎 Mac – letöltés és indítás</h2>
+  <ol class="steps">
+    <li><strong>Kattints a kék Letöltés gombra</strong> az oldal tetején.</li>
+    <li><strong>Görgess le az <em>Assets</em> szóig,</strong> és kattints a <code>Yoinker-macOS.dmg</code> fájlra.</li>
+    <li><strong>Nyisd meg a letöltött fájlt.</strong> Egy kis ablak jelenik meg a Yoinker ikonnal és egy <em>Applications</em> mappával. <strong>Húzd rá a Yoinkert az Applications mappára.</strong></li>
+    <li><strong>Nyisd meg az Applications (Programok) mappát</strong> a Finderben, és keresd meg a Yoinkert.</li>
+    <li><strong>Csak az első alkalommal:</strong> ne kattints rá duplán! Tartsd lenyomva a <kbd>Control</kbd> billentyűt, és úgy kattints rá (vagy jobb klikk), válaszd a <strong>Megnyitás</strong>t, majd a felugró ablakban megint a <strong>Megnyitás</strong>t.
+      <figure><img src="img/hu/mac_gatekeeper.svg" alt="Mac: jobb klikk a Yoinkeren, Megnyitás; majd a figyelmeztető ablakban Megnyitás" loading="lazy"><figcaption>Ha simán duplán kattintanál, a Mac azt mondaná, hogy „nem nyitható meg”. Ez a trükk megmondja neki, hogy megbízol a programban.</figcaption></figure>
+    </li>
+    <li><strong>Kész.</strong> Ezután már ugyanúgy dupla kattintással indul, mint bármi más.</li>
+  </ol>
+  <div class="warn"><strong>Azt írja: „A Yoinker sérült, és nem nyitható meg”?</strong> Ez az új Macek szokása bizonyos böngészőkkel. Kérj meg valakit, aki ismeri a Terminált, hogy futtassa ezt: <code>xattr -cr /Applications/Yoinker.app</code> – utána megnyílik.</div>
+  <p><a class="btn small" href="#hasznalat">Tovább: hogyan töltsek le vele? ↓</a></p>
+</section>
+
+<!-- ============================ LINUX ============================ -->
+<section id="linux">
+  <h2>🐧 Linux – letöltés és indítás</h2>
+  <ol class="steps">
+    <li><strong>Kattints a kék Letöltés gombra</strong> az oldal tetején, és az <em>Assets</em> alatt válaszd a <code>Yoinker-Linux</code> fájlt.</li>
+    <li><strong>Tedd futtathatóvá:</strong> a fájlkezelőben jobb klikk a <code>Yoinker-Linux</code> fájlon → <strong>Tulajdonságok</strong> → <strong>Jogosultságok</strong> → pipáld be a <strong>„Futtatás programként”</strong> (vagy hasonló szövegű) pontot.</li>
+    <li><strong>Dupla kattintás.</strong> Megnyílik a Yoinker.</li>
+  </ol>
+  <p>Ha jobban szereted a terminált: <code>chmod +x Yoinker-Linux && ./Yoinker-Linux</code></p>
+  <p><a class="btn small" href="#hasznalat">Tovább: hogyan töltsek le vele? ↓</a></p>
+</section>
+
+<!-- ============================ ANDROID ============================ -->
+<section id="android">
+  <h2>🤖 Android telefon vagy tablet</h2>
+  <p>A Yoinker számítógépre készült, telefonon nem fut. Androidra viszont van egy ugyanilyen egyszerű, ingyenes és reklámmentes program, ami belül ugyanazt a motort használja: a <strong>Seal</strong>. Ezt ajánljuk.</p>
+  <ol class="steps">
+    <li><strong>Telepítsd az F-Droid áruházat</strong>, ha még nincs: <a href="https://f-droid.org/">f-droid.org</a> → „Download F-Droid”. Ez egy ingyenes alkalmazásbolt, csak nyílt forráskódú, reklámmentes programok vannak benne. A telefon rá fog kérdezni, hogy engedélyezed-e az „ismeretlen forrásból” telepítést – engedélyezd.</li>
+    <li><strong>Az F-Droidban keress rá: <em>Seal</em></strong>, vagy nyisd meg közvetlenül: <a href="https://f-droid.org/packages/com.junkfood.seal/">f-droid.org/packages/com.junkfood.seal</a>. Telepítsd.</li>
+    <li><strong>Használat:</strong> a YouTube appban a videónál nyomd meg a <strong>Megosztás</strong> gombot, és válaszd a <strong>Seal</strong>t. Vagy másold ki a linket, nyisd meg a Sealt, és nyomd meg a letöltés gombot. A videó a Galériában / a Letöltések mappában lesz.</li>
+  </ol>
+  <p>A Seal magyarul is tud, beállításokban választható. Készítője: <a href="https://github.com/JunkFood02/Seal">JunkFood02</a>, nem mi – de ugyanazt a <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a>-t használja, mint a Yoinker, tehát ugyanazokról az oldalakról tölt.</p>
+  <div class="warn"><strong>iPhone / iPad:</strong> az Apple nem enged ilyen programot az áruházába. Használd a Yoinkert egy számítógépen, és onnan másold át a fájlt.</div>
+</section>
+
+<!-- ============================ HASZNÁLAT ============================ -->
+<section id="hasznalat">
+  <h2>Hogyan töltsek le vele? (30 másodperc)</h2>
+  <ol class="steps">
+    <li><strong>A böngészőben menj a videóra,</strong> amit szeretnél. Kattints egyszer a <strong>címsorba</strong> a böngésző legtetején (ahol olyasmi van, hogy <code>https://www.youtube.com/watch?v=…</code>). Az egész cím kijelölődik. Másold ki: <kbd>Ctrl</kbd>+<kbd>C</kbd> (Macen <kbd>Cmd</kbd>+<kbd>C</kbd>), vagy jobb klikk → Másolás.</li>
+    <li><strong>A Yoinkerben nyomd meg a „Beillesztés” gombot.</strong> A link megjelenik a mezőben.
+      <figure><img src="img/hu/02_link_beillesztve.png" alt="A Yoinker ablaka, az 1. lépés mezőjében egy YouTube link" loading="lazy"></figure>
+    </li>
+    <li><strong>Válaszd ki, mit kérsz:</strong> <strong>Videó</strong> (mellette a minőség: Legjobb / Jó / Közepes / Kis fájl) vagy <strong>Csak zene (MP3)</strong>.<br>Ha a link egy egész lejátszási lista, és az egészet akarod, pipáld be az alatta lévő négyzetet.
+      <figure><img src="img/hu/03_csak_zene.png" alt="A 2. lépésnél a „Csak zene (MP3)” van kiválasztva" loading="lazy"><figcaption>„Csak zene” esetén a minőség-választó elszürkül, mert nincs rá szükség.</figcaption></figure>
+    </li>
+    <li><strong>Nézd meg, hova menti</strong> (3. lépés). Alapból a <strong>Letöltések → Yoinker</strong> mappába. Ha máshova szeretnéd, „Mappa módosítása…”. Megjegyzi.</li>
+    <li><strong>Nyomd meg a nagy LETÖLTÉS gombot.</strong> A csík töltődik, alatta látod a százalékot, a sebességet és hogy hány másodperc van hátra.
+      <figure><img src="img/hu/04_letoltes_kozben.png" alt="Letöltés folyamatban: a csík 43%-nál, alatta sebesség és hátralévő idő" loading="lazy"></figure>
+    </li>
+    <li><strong>Amikor azt írja: <span class="ok">Kész!</span></strong>, nyomd meg <strong>A mappa megnyitása</strong> gombot. Ott a fájl, a videó címével elnevezve.
+      <figure><img src="img/hu/05_kesz.png" alt="Kész! A fájl a mappádban van – és az „A mappa megnyitása” gomb" loading="lazy"></figure>
+    </li>
+  </ol>
+</section>
+
+<!-- ============================ HIBÁK ============================ -->
+<section id="hiba">
+  <h2>Valami nem megy?</h2>
+  <p>A Yoinker nem ír ki rejtélyes hibakódokat: a csík alatt magyarul megmondja, mi a baj. Például:</p>
+  <figure><img src="img/hu/06_hiba.png" alt="Hibaüzenet magyarul: Ehhez a videóhoz bejelentkezés kell, vagy privát, ezért nem tölthető le." loading="lazy"></figure>
+  <table>
+    <thead><tr><th>Ezt írja</th><th>Mit csinálj</th></tr></thead>
+    <tbody>
+      <tr><td>Az oldal elutasította a letöltést. Szerezd be a legújabb verziót…</td><td>A videós oldal változtatott valamit, a nálad lévő Yoinker túl régi. <strong>Töltsd le újra</strong> a kék gombbal, cseréld le a régit. Ez az esetek 95%-ában megoldja.</td></tr>
+      <tr><td>Nincs internetkapcsolat, vagy az oldal nem válaszolt.</td><td>Nézd meg, megy-e a net a böngészőben. Próbáld újra egy perc múlva.</td></tr>
+      <tr><td>Ehhez a videóhoz bejelentkezés kell, vagy privát.</td><td>Ezt nem lehet letölteni. Akkor sem, ha a böngészőben be vagy jelentkezve.</td></tr>
+      <tr><td>Ez a link nem támogatott.</td><td>Nem egy videó linkjét másoltad, hanem pl. egy csatornáét. Nyisd meg magát a videót, és azt másold.</td></tr>
+      <tr><td>Ez nem úgy néz ki, mint egy link.</td><td>A linkek <code>https://</code>-sel kezdődnek. Kattints a böngésző címsorába, és az egészet másold.</td></tr>
+      <tr><td>Nem sikerült menteni a fájlt.</td><td>Tele a lemez, vagy nem írható a mappa. „Mappa módosítása…” → válaszd az Asztalt.</td></tr>
+    </tbody>
+  </table>
+  <p>Ha valami más van, nyomd meg az ablak alján a <strong>Részletek (csak segítőnek)</strong> gombot, másold ki, ami megjelenik, és küldd el annak, akitől a Yoinkert kaptad. Neki ebből minden kiderül.</p>
+  <figure><img src="img/hu/07_reszletek.png" alt="A Részletek doboz kinyitva, benne technikai napló" loading="lazy"><figcaption>Ezt a részt neked nem kell érteni.</figcaption></figure>
+</section>
+
+<section id="gyik">
+  <h2>Gyakori kérdések</h2>
+  <h3>Ingyenes? Mi a trükk?</h3>
+  <p>Ingyenes, nincs fiók, nincs reklám, nem gyűjt rólad semmit. Nincs trükk.</p>
+  <h3>Csak YouTube?</h3>
+  <p>Nem – a legtöbb videós és zenés oldal megy. Illeszd be a linket, és próbáld ki.</p>
+  <h3>Angolul indult el.</h3>
+  <p>Az ablak bal alsó sarkában van a <strong>Nyelv</strong> választó. Állítsd „Magyar”-ra, megjegyzi.</p>
+  <h3>Múlt hónapban ment, most nem.</h3>
+  <p>A videós oldalak gyakran változtatnak. Töltsd le a legújabb Yoinkert a kék gombbal, és cseréld le a régit. A régi fájlt egyszerűen töröld.</p>
+  <h3>Szabad ez?</h3>
+  <p>Csak olyat tölts le, amihez jogod van – saját videót, szabadon felhasználható tartalmat, vagy amit a feltöltő engedett. A program maga csak egy eszköz.</p>
+</section>
+
+<footer>
+  <p><strong>Yoinker</strong> · © 2026 Csirke Dániel · Minden jog fenntartva. · <a href="https://github.com/danielcsirke/yoinker">Forráskód és angol leírás (GitHub)</a> · <a href="https://github.com/danielcsirke/yoinker/blob/main/LICENSE">Licenc (magyar és angol)</a></p>
+  <p>A Yoinker a <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> és az <a href="https://ffmpeg.org/">FFmpeg</a> nyílt forráskódú programokra épül. A Seal nem a mi programunk; független, nyílt forráskódú projekt.</p>
+</footer>
+
+</div>
+<script>
+(function () {
+  var ua = navigator.userAgent || "";
+  var os = /Android/i.test(ua) ? "android"
+         : /iPhone|iPad|iPod/i.test(ua) ? "android"   // the Android section also covers iOS
+         : /Mac/i.test(ua) ? "mac"
+         : /Win/i.test(ua) ? "windows"
+         : /Linux|X11/i.test(ua) ? "linux" : null;
+  var names = { windows: "Windowst", mac: "Macet", linux: "Linuxot", android: "telefont vagy tabletet" };
+  if (!os) return;
+  var box = document.getElementById("detect");
+  box.hidden = false;
+  box.innerHTML = "Úgy látjuk, <strong>" + names[os] + "</strong> használsz. " +
+    '<a href="#' + os + '">Ugrás a neked szóló részhez ↓</a>';
+  var links = document.querySelectorAll("nav.os a");
+  for (var i = 0; i < links.length; i++) {
+    if (links[i].getAttribute("data-os") === os) links[i].classList.add("active");
+  }
+  if (os === "android") {
+    var top = document.getElementById("dl-top");
+    top.textContent = "⬇ Androidra: Seal (F-Droid)";
+    top.href = "https://f-droid.org/packages/com.junkfood.seal/";
+  }
+})();
+</script>
+</body>
+</html>
