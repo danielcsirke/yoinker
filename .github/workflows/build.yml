@@ -1,0 +1,100 @@
+# Builds Yoinker for Windows, macOS and Linux.
+# - On every push / pull request: run the tests and build, keep the files as
+#   workflow artifacts for 14 days.
+# - On a tag like v1.0.0: also create a GitHub Release with the files attached,
+#   which is the page we send normal users to.
+
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: pytest -q
+
+  build:
+    name: Build ${{ matrix.label }}
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            label: Windows
+            artifact: Yoinker-Windows.exe
+            built: dist/Yoinker.exe
+          - os: macos-latest
+            label: macOS
+            artifact: Yoinker-macOS.dmg
+            built: dist/Yoinker-macOS.dmg
+          - os: ubuntu-latest
+            label: Linux
+            artifact: Yoinker-Linux
+            built: dist/Yoinker
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+      - name: Build with PyInstaller
+        run: pyinstaller --clean --noconfirm yoinker.spec
+      - name: Make a .dmg (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          mkdir -p dmg && cp -R dist/Yoinker.app dmg/
+          ln -s /Applications dmg/Applications
+          hdiutil create -volname Yoinker -srcfolder dmg -ov -format UDZO dist/Yoinker-macOS.dmg
+      - name: Rename output
+        shell: bash
+        run: |
+          mkdir -p out
+          cp "${{ matrix.built }}" "out/${{ matrix.artifact }}"
+          ls -la out
+      - name: Smoke test (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          chmod +x out/Yoinker-Linux
+          sudo apt-get install -y -qq xvfb
+          xvfb-run -a timeout 20s ./out/Yoinker-Linux & sleep 10; kill %1 || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: out/${{ matrix.artifact }}
+          retention-days: 14
+
+  release:
+    name: Publish release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          merge-multiple: true
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/*
+          body_path: docs/RELEASE_NOTES.md
+          generate_release_notes: true

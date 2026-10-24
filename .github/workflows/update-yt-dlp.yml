@@ -1,0 +1,22 @@
+# Sites change often and yt-dlp fixes them fast. This job re-runs the tests
+# against the newest yt-dlp every week, so a broken build is noticed early.
+# To ship the fix, just push a new tag (see docs/MAINTAINERS.md).
+
+name: Weekly yt-dlp check
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]" && pip install -U yt-dlp
+      - run: pip show yt-dlp | head -2
+      - run: pytest -q
