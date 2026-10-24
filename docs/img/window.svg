@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="470" viewBox="0 0 600 470" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <rect width="600" height="470" rx="10" fill="#f3f3f3" stroke="#bbb"/>
+  <rect x="0" y="0" width="600" height="32" rx="10" fill="#e4e4e4"/>
+  <text x="300" y="21" text-anchor="middle" font-size="14" fill="#333">Yoinker</text>
+
+  <text x="24" y="66" font-size="16" font-weight="bold" fill="#222">1. Paste the link of the video or song</text>
+  <rect x="24" y="78" width="420" height="34" rx="4" fill="#fff" stroke="#999"/>
+  <text x="34" y="100" font-size="14" fill="#555">https://www.youtube.com/watch?v=…</text>
+  <rect x="452" y="78" width="60" height="34" rx="4" fill="#e9e9e9" stroke="#999"/>
+  <text x="482" y="100" text-anchor="middle" font-size="13" fill="#222">Paste</text>
+  <rect x="518" y="78" width="58" height="34" rx="4" fill="#e9e9e9" stroke="#999"/>
+  <text x="547" y="100" text-anchor="middle" font-size="13" fill="#222">Clear</text>
+
+  <text x="24" y="152" font-size="16" font-weight="bold" fill="#222">2. What do you want?</text>
+  <circle cx="34" cy="176" r="7" fill="#fff" stroke="#555"/><circle cx="34" cy="176" r="3.5" fill="#2a6fdb"/>
+  <text x="48" y="181" font-size="14" fill="#222">Video</text>
+  <circle cx="114" cy="176" r="7" fill="#fff" stroke="#555"/>
+  <text x="128" y="181" font-size="14" fill="#222">Music only (MP3)</text>
+  <text x="300" y="181" font-size="14" fill="#222">Quality:</text>
+  <rect x="360" y="163" width="130" height="26" rx="4" fill="#fff" stroke="#999"/>
+  <text x="370" y="181" font-size="13" fill="#222">Best</text>
+  <text x="478" y="181" font-size="11" fill="#666">▼</text>
+  <rect x="27" y="196" width="14" height="14" rx="2" fill="#fff" stroke="#555"/>
+  <text x="48" y="208" font-size="14" fill="#222">If the link is a playlist, download all of it</text>
+
+  <text x="24" y="250" font-size="16" font-weight="bold" fill="#222">3. Where should it be saved?</text>
+  <text x="24" y="276" font-size="14" fill="#444">/Users/you/Downloads/Yoinker</text>
+  <rect x="440" y="258" width="136" height="28" rx="4" fill="#e9e9e9" stroke="#999"/>
+  <text x="508" y="277" text-anchor="middle" font-size="13" fill="#222">Change folder...</text>
+
+  <rect x="24" y="306" width="552" height="54" rx="6" fill="#2a6fdb" stroke="#1d53a8"/>
+  <text x="300" y="340" text-anchor="middle" font-size="20" font-weight="bold" fill="#fff">DOWNLOAD</text>
+
+  <rect x="24" y="372" width="552" height="14" rx="3" fill="#ddd" stroke="#bbb"/>
+  <rect x="24" y="372" width="238" height="14" rx="3" fill="#4caf50"/>
+  <text x="24" y="412" font-size="14" fill="#222">Downloading... 43%  2.1 MB/s  12 s left</text>
+
+  <rect x="24" y="428" width="118" height="26" rx="4" fill="#e9e9e9" stroke="#999"/>
+  <text x="83" y="446" text-anchor="middle" font-size="13" fill="#222">Open the folder</text>
+  <text x="576" y="446" text-anchor="end" font-size="11" fill="#888">Yoinker 1.0.0 - All rights reserved</text>
+</svg>
