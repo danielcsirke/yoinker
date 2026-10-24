@@ -289,7 +289,7 @@ class YoinkerApp(tk.Tk):
             _, err_key, detail = event
             self.progress["value"] = 0
             self._set_status(err_key)
-            self._log("ERROR: " + detail)
+            self._log(detail if detail.startswith("ERROR") else "ERROR: " + detail)
             if err_key == "err_blocked":
                 webbrowser.open(RELEASES_URL)
             self._finish()

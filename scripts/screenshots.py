@@ -64,6 +64,9 @@ def main() -> None:
     shot(app, "06_hiba")
 
     app._set_status("status_ready")
+    app.log.configure(state="normal")
+    app.log.delete("1.0", "end")
+    app.log.configure(state="disabled")
     app._toggle_details()
     app._log("[youtube] aqz-KE-bpKQ: Downloading webpage")
     app._log("[info] aqz-KE-bpKQ: Downloading 1 format(s): 251")
