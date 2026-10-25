@@ -39,7 +39,7 @@ if sys.platform == "darwin":
     app = BUNDLE(coll, name="Yoinker.app", icon=icon,
                  bundle_identifier="com.danielcsirke.yoinker",
                  info_plist={"NSHighResolutionCapable": True,
-                             "CFBundleShortVersionString": "1.0.1"})
+                             "CFBundleShortVersionString": "1.1.0"})
 else:
     # One single file on Windows and Linux: easiest thing to hand to someone.
     exe = EXE(pyz, a.scripts, a.binaries, a.zipfiles, a.datas, [],
