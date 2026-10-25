@@ -8,6 +8,12 @@ Step-by-step with every click: [English guide](https://github.com/danielcsirke/y
 
 ---
 
+## 1.0.1
+
+- Yoinker has a logo now: in the window title bar, as the .exe / .app icon, and on the website.
+- Details log no longer prints "ERROR: ERROR:".
+- Built with the newest yt-dlp.
+
 ## 1.0.0
 
 First release.
