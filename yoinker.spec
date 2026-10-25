@@ -22,7 +22,7 @@ a = Analysis(
     ["yoinker/__main__.py"],
     pathex=["."],
     binaries=[(ffmpeg_exe, ffmpeg_dest)],
-    datas=[],
+    datas=[("yoinker/assets/icon.png", "yoinker/assets")],
     hiddenimports=collect_submodules("yt_dlp"),
     hookspath=[],
     runtime_hooks=[],

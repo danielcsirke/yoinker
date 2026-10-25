@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/yoinker-512.png" width="128" height="128" alt="Yoinker logo"></p>
+
 # Yoinker
 
 **Download videos and music from the internet with one button. No setup, no typing, no "terminal".**

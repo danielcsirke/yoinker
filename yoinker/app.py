@@ -61,12 +61,22 @@ class YoinkerApp(tk.Tk):
 
         self.minsize(560, 420)
         self.resizable(True, False)
+        self._set_icon()
         self._build()
         self._apply_texts()
         self.protocol("WM_DELETE_WINDOW", self._on_close)
         self.after(100, self._poll_events)
 
     # ----- building the window -------------------------------------------
+
+    def _set_icon(self):
+        """Title-bar / taskbar icon. Works both from source and inside PyInstaller."""
+        icon = Path(__file__).parent / "assets" / "icon.png"
+        try:
+            self._icon_image = tk.PhotoImage(file=str(icon))  # keep a reference
+            self.iconphoto(True, self._icon_image)
+        except tk.TclError:
+            pass  # no icon is better than no window
 
     def _build(self):
         root = ttk.Frame(self, padding=PAD * 2)

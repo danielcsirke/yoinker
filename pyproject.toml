@@ -28,5 +28,8 @@ Downloads = "https://github.com/danielcsirke/yoinker/releases/latest"
 [tool.setuptools.packages.find]
 include = ["yoinker*"]
 
+[tool.setuptools.package-data]
+yoinker = ["assets/*.png"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

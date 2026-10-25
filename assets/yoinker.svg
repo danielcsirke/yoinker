@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Yoinker logo. A hook pulling an arrow down into a tray: "yoink". -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#1e40af"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <g fill="none" stroke="#ffffff" stroke-width="56" stroke-linecap="round" stroke-linejoin="round">
+    <!-- hook: the "grab" -->
+    <path d="M 256 172 C 256 112 346 112 346 172"/>
+    <!-- shaft -->
+    <path d="M 256 172 L 256 336"/>
+    <!-- arrowhead -->
+    <path d="M 172 262 L 256 346 L 340 262"/>
+    <!-- tray -->
+    <path d="M 148 424 L 364 424"/>
+  </g>
+</svg>

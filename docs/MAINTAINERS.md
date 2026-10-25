@@ -43,6 +43,13 @@ Design rules worth keeping:
 - **The GUI never shows a raw exception.** Everything goes through `classify_error` → a friendly sentence; the raw text goes only to the collapsed Details box.
 - **Both languages always complete.** `tests/test_i18n.py` fails if a key is missing or a `{placeholder}` differs.
 
+## Changing the logo
+
+Edit `assets/yoinker.svg` (the only master), then `pip install cairosvg pillow`
+and `python scripts/make_icons.py`. It regenerates the `.ico`, `.icns`, the
+window icon in `yoinker/assets/`, and the site's favicon/logo. Commit all of
+them; CI only consumes the generated files.
+
 ## Adding a language
 
 Add a dict to `STRINGS` and an entry to `LANGUAGES` in `i18n.py`; run `pytest`. The language picker populates itself.

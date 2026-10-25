@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/yoinker-512.png" width="128" height="128" alt="Yoinker logó"></p>
+
 # Yoinker
 
 **Videók és zenék letöltése az internetről egyetlen gombbal. Nincs telepítgetés, nincs gépelés, nincs "terminál".**
