@@ -44,12 +44,13 @@ The most common fix: **get the newest version from the [Downloads page](https://
 
 ## What it can do
 
-- Video (MP4, plays everywhere) in Best / 1080p / 720p / 480p quality
+- Video as MP4 that **actually plays** on Windows, Macs, TVs and phones (H.264 + AAC by default; YouTube's raw "best" is often AV1/VP9, which Windows Media Player can't open) in Best / 1080p / 720p / 480p quality
 - Music only (MP3, 192 kbps) with title and artist tags
 - Whole playlists, if you tick the box
 - Works on YouTube and [more than a thousand other sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
 - English and Hungarian — picks your computer's language, switchable at the bottom
 - Nothing is uploaded anywhere, no account, no ads, no tracking
+- An **Advanced** tab for the few who want it: best-quality codecs, MKV/WebM, MP3/M4A/Opus/FLAC/WAV, cover art, subtitles, login taken from your browser (fixes "needs a login"), file-name pattern, speed limit, and raw yt-dlp / FFmpeg arguments. Everything there is saved automatically.
 
 ## For technical people
 
@@ -70,7 +71,7 @@ Layout:
 yoinker/app.py          the window (Tkinter, no other GUI dependency)
 yoinker/downloader.py   the yt-dlp part; runs in a thread, reports events to the window
 yoinker/i18n.py         all texts in EN + HU, and the rules that turn yt-dlp errors into human sentences
-yoinker/config.py       remembers language + folder
+yoinker/config.py       remembers language + folder + the Advanced tab (defaults live here)
 yoinker.spec            PyInstaller recipe (bundles FFmpeg)
 .github/workflows/      tests + builds for Windows/macOS/Linux; a tag v* makes a Release
 docs/                   user guide, troubleshooting, maintainers' notes

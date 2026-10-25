@@ -74,7 +74,28 @@ Ha le akarod állítani, nyomd meg a **Leállítás** gombot.
 
 ---
 
+## 2/b. rész — A Haladó fül (nyugodtan kihagyhatod)
+
+Az ablak tetején két fül van: **Letöltés** (ezt használtad az előbb) és **Haladó**. A Haladóra soha *nincs szükséged*. Annak az egy ismerősnek van ott, aki tudja, mi az a kodek. Minden automatikusan mentődik, és az **Alapértelmezések visszaállítása** gomb mindent visszarak.
+
+| Beállítás | Mit csinál |
+|---|---|
+| **Videó kódolás** | A *Mindenhol lejátszható (H.264 + AAC)* az alapértelmezés, ezért nyílnak meg a fájljaid bármelyik Windowson, tévén, telefonon. A *Legjobb minőség* azt veszi, ami az oldalon van (sokszor AV1/VP9) — kisebb és élesebb, de a Windows Media Player és sok tévé nem hajlandó lejátszani. |
+| **Videófájl típusa** | mp4 (alap), mkv vagy webm. |
+| **Zenefájl típusa / minősége** | mp3 (alap) 128/192/256/320 kbps-en, vagy m4a, opus, flac, wav. |
+| **Borítókép beletétele a fájlba** | A videó előnézeti képe lesz az MP3 albumborítója / az MP4 posztere. |
+| **Feliratok letöltése** | Nyelvek kódokkal, vesszővel elválasztva, pl. `hu,en`. A *beletéve a videóba* beágyazza, így bármelyik lejátszóban bekapcsolható. |
+| **Bejelentkezés átvétele a böngészőből** | A Yoinker beolvassa a kiválasztott böngésző sütijeit, így a *bejelentkezés kell* vagy *korhatáros* videók is mennek, ha ott be vagy lépve. Windowson előbb zárd be a böngészőt. |
+| **Fájlnév minta** | A yt-dlp kimeneti sablonja. Alap: `%(title).150B [%(id)s].%(ext)s`. |
+| **Sebességkorlát** | pl. `2M` = 2 MB/mp, hogy a letöltés ne egye meg a ház netjét. Üresen = nincs korlát. |
+| **Extra yt-dlp paraméterek** | Bármi a `yt-dlp --help`-ből, pl. `--embed-chapters`. Rossz kapcsolót a csík alatt kiírja, semmi nem romlik el. |
+| **Extra FFmpeg paraméterek** | Minden FFmpeg lépés megkapja, pl. `-threads 2`. |
+
+---
+
 ## 3. rész — Gyakori kérdések
+
+**Letöltöttem egy videót, és a Windows nem játssza le / nincs kép.** Nyisd meg a **Haladó** fület, és nézd meg, hogy a *Mindenhol lejátszható (H.264 + AAC)* van-e kiválasztva (alapból az van, hacsak valaki át nem állította), aztán töltsd le újra. Vagy telepítsd a [VLC](https://www.videolan.org/)-t, az mindent lejátszik.
 
 **Ingyenes? Mi a trükk?** Ingyenes, nincs fiók, nincs reklám. A "minden jog fenntartva" csak annyit jelent, hogy magát a programot nem szabad másolni vagy árulni.
 

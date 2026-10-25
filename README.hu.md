@@ -46,12 +46,13 @@ A leggyakoribb megoldás: **töltsd le a legújabb verziót a [Letöltések olda
 
 ## Mit tud
 
-- Videó (MP4, mindenhol lejátszható) Legjobb / 1080p / 720p / 480p minőségben
+- Videó MP4-ben, ami **tényleg lejátszódik** Windowson, Macen, tévén, telefonon (alapból H.264 + AAC; a YouTube nyers „legjobb” videója sokszor AV1/VP9, amit a Windows Media Player nem nyit meg) Legjobb / 1080p / 720p / 480p minőségben
 - Csak zene (MP3, 192 kbps), címmel és előadóval
 - Egész lejátszási listák, ha bepipálod
 - YouTube és [több mint ezer másik oldal](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
 - Magyar és angol — a géped nyelvét választja, alul átállítható
 - Semmit nem tölt fel sehova, nincs fiók, nincs reklám, nincs követés
+- **Haladó** fül annak a kevésnek, akinek kell: legjobb minőségű kódolás, MKV/WebM, MP3/M4A/Opus/FLAC/WAV, borítókép, feliratok, bejelentkezés átvétele a böngészőből (megoldja a „bejelentkezés kell” hibát), fájlnév minta, sebességkorlát, nyers yt-dlp / FFmpeg paraméterek. Minden automatikusan mentődik.
 
 ## Hozzáértőknek
 

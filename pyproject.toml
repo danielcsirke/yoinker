@@ -13,6 +13,7 @@ authors = [{ name = "Daniel Csirke" }]
 dependencies = [
     "yt-dlp>=2025.1.1",
     "imageio-ffmpeg>=0.5",
+    "mutagen>=1.47",
 ]
 
 [project.optional-dependencies]

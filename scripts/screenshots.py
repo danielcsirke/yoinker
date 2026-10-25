@@ -71,6 +71,10 @@ def main() -> None:
     app._log("[youtube] aqz-KE-bpKQ: Downloading webpage")
     app._log("[info] aqz-KE-bpKQ: Downloading 1 format(s): 251")
     shot(app, "07_reszletek")
+    app._toggle_details()
+
+    app.notebook.select(1)
+    shot(app, "08_halado")
 
     app.destroy()
 

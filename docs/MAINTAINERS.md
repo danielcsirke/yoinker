@@ -35,10 +35,11 @@ Every push to `main` also builds all three, kept 14 days under the workflow run'
 | `yoinker/app.py` | The Tk window. All user interaction. Never calls yt-dlp directly. |
 | `yoinker/downloader.py` | `Job` runs yt-dlp in a thread and pushes event tuples into a `queue.Queue`; the window polls it every 100 ms. This keeps the GUI responsive and means the engine is testable without a display. |
 | `yoinker/i18n.py` | Every visible string, EN + HU. `classify_error()` maps raw yt-dlp messages to `err_*` keys via an ordered substring list. **Add a new rule here when users send you a Details log with an unhelpful "generic" error.** |
-| `yoinker/config.py` | `settings.json` in the OS-appropriate config dir. Only `language` and `folder`. |
+| `yoinker/config.py` | `settings.json` in the OS-appropriate config dir: `language`, `folder` and `advanced` (the Advanced tab; `ADVANCED_DEFAULTS` is the single source of truth, `advanced()` sanitises what is on disk). |
 | `yoinker.spec` | PyInstaller. Bundles the FFmpeg binary that `imageio-ffmpeg` downloads at `pip install` time into `imageio_ffmpeg/binaries/`, where the package expects it at runtime. |
 
 Design rules worth keeping:
+- **Default output must play on a stock Windows PC.** `format_selector(compat=True)` asks for `avc1` + `mp4a`, and `FFmpegVideoConvertor` re-encodes the rare VP9/AV1-only fallback. "Best quality" is opt-in on the Advanced tab precisely because AV1/VP9 looks like a broken file to non-technical users.
 - **No other GUI dependency than Tkinter** — it's in every Python, builds everywhere, no Qt licensing or 80 MB downloads.
 - **The GUI never shows a raw exception.** Everything goes through `classify_error` → a friendly sentence; the raw text goes only to the collapsed Details box.
 - **Both languages always complete.** `tests/test_i18n.py` fails if a key is missing or a `{placeholder}` differs.

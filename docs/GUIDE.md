@@ -74,7 +74,28 @@ To stop a download, press **Stop**.
 
 ---
 
+## Part 2b — The Advanced tab (you can skip this)
+
+At the top of the window there are two tabs: **Download** (what you just used) and **Advanced**. You never *need* Advanced. It is there for the one friend who knows what a codec is. Everything on it is saved automatically, and **Reset to defaults** puts it all back.
+
+| Setting | What it does |
+|---|---|
+| **Video codec** | *Plays everywhere (H.264 + AAC)* is the default and is why your files open on any Windows PC, TV or phone. *Best quality* takes whatever the site has (often AV1/VP9) — smaller and sharper, but Windows Media Player and many TVs refuse it. |
+| **Video file type** | mp4 (default), mkv or webm. |
+| **Music file type / quality** | mp3 (default) at 128/192/256/320 kbps, or m4a, opus, flac, wav. |
+| **Put the cover picture into the file** | The video's thumbnail becomes the album art of the MP3 / the poster of the MP4. |
+| **Download subtitles** | Languages as codes separated by commas, e.g. `hu,en`. *Put them inside the video* embeds them so any player can switch them on. |
+| **Use login from browser** | Yoinker reads the cookies of the browser you pick, so videos that say *needs a login* or *age-restricted* work if you are logged in there. On Windows, close the browser first. |
+| **File name pattern** | yt-dlp's output template. Default: `%(title).150B [%(id)s].%(ext)s`. |
+| **Speed limit** | e.g. `2M` for 2 MB/s, so a download doesn't hog the house's internet. Empty = no limit. |
+| **Extra yt-dlp arguments** | Anything from `yt-dlp --help`, e.g. `--embed-chapters`. A wrong flag is reported under the progress bar, nothing breaks. |
+| **Extra FFmpeg arguments** | Passed to every FFmpeg step, e.g. `-threads 2`. |
+
+---
+
 ## Part 3 — Questions people ask
+
+**I downloaded a video and Windows won't play it / plays it without picture.** Open the **Advanced** tab and make sure *Plays everywhere (H.264 + AAC)* is selected (it is, unless somebody changed it), then download again. Or install [VLC](https://www.videolan.org/), which plays everything.
 
 **Is it free? Is there a catch?** Free, no account, no ads. It is "all rights reserved" only in the sense that you shouldn't copy or resell the program itself.
 

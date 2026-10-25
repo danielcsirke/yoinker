@@ -179,6 +179,15 @@
   </ol>
 </section>
 
+<!-- ============================ HALADÓ ============================ -->
+<section id="halado">
+  <h2>A „Haladó” fül (nyugodtan kihagyhatod)</h2>
+  <p>Az ablak tetején két fül van: <strong>Letöltés</strong> és <strong>Haladó</strong>. A Haladóra <u>soha nincs szükséged</u> – annak az egy ismerősnek van ott, aki tudja, mi az a kodek. Minden, amit ott átállítasz, automatikusan mentődik, és az <strong>Alapértelmezések visszaállítása</strong> gomb mindent visszarak.</p>
+  <figure><img src="img/hu/08_halado.png" alt="A Haladó fül: videó kódolás, fájltípusok, borítókép, feliratok, böngésző-bejelentkezés, fájlnév minta, sebességkorlát, extra paraméterek" loading="lazy"><figcaption>Ha nem tudod, mi ez, hagyd békén – alapból minden jól van beállítva.</figcaption></figure>
+  <p>Ami benne van, röviden: <strong>videó kódolás</strong> (alapból „mindenhol lejátszható” – lásd a következő kérdést), videó- és zenefájl típusa és minősége, borítókép a fájlba, feliratok, <strong>bejelentkezés átvétele a böngészőből</strong> (ettől mennek a „bejelentkezés kell” és a korhatáros videók, ha a böngészőben be vagy lépve), fájlnév minta, sebességkorlát, és nyers yt-dlp / FFmpeg paraméterek hozzáértőknek.</p>
+  <div class="warn"><strong>Letöltöttem, de a Windows nem játssza le / nincs kép?</strong> Az a videó AV1 vagy VP9 kódolású, amit a Windows Media Player és sok tévé nem ismer. A Yoinker alapból <strong>H.264 + AAC</strong>-t tölt, amit minden lejátszik – ez csak akkor fordulhat elő, ha valaki a Haladó fülön a „Legjobb minőség”-et választotta. Állítsd vissza a „Mindenhol lejátszható”-ra, és töltsd le újra. Vagy telepítsd a <a href="https://www.videolan.org/">VLC</a>-t, az mindent lejátszik.</div>
+</section>
+
 <!-- ============================ HIBÁK ============================ -->
 <section id="hiba">
   <h2>Valami nem megy?</h2>
@@ -189,9 +198,10 @@
     <tbody>
       <tr><td>Az oldal elutasította a letöltést. Szerezd be a legújabb verziót…</td><td>A videós oldal változtatott valamit, a nálad lévő Yoinker túl régi. <strong>Töltsd le újra</strong> a kék gombbal, cseréld le a régit. Ez az esetek 95%-ában megoldja.</td></tr>
       <tr><td>Nincs internetkapcsolat, vagy az oldal nem válaszolt.</td><td>Nézd meg, megy-e a net a böngészőben. Próbáld újra egy perc múlva.</td></tr>
-      <tr><td>Ehhez a videóhoz bejelentkezés kell, vagy privát.</td><td>Ezt nem lehet letölteni. Akkor sem, ha a böngészőben be vagy jelentkezve.</td></tr>
+      <tr><td>Ehhez a videóhoz bejelentkezés kell, vagy privát.</td><td>Ha a böngészőben bejelentkezve meg tudod nézni: <strong>Haladó fül → Bejelentkezés átvétele a böngészőből</strong> → válaszd ki azt a böngészőt (Windowson előbb zárd be), és próbáld újra. Különben nem tölthető le.</td></tr>
       <tr><td>Ez a link nem támogatott.</td><td>Nem egy videó linkjét másoltad, hanem pl. egy csatornáét. Nyisd meg magát a videót, és azt másold.</td></tr>
       <tr><td>Ez nem úgy néz ki, mint egy link.</td><td>A linkek <code>https://</code>-sel kezdődnek. Kattints a böngésző címsorába, és az egészet másold.</td></tr>
+      <tr><td>A Haladó fülön egy beállítás hibás: …</td><td>Valaki a Haladó fülre rossz dolgot írt. Az üzenet vége megmondja, mit. Vagy nyomd meg ott az „Alapértelmezések visszaállítása” gombot.</td></tr>
       <tr><td>Nem sikerült menteni a fájlt.</td><td>Tele a lemez, vagy nem írható a mappa. „Mappa módosítása…” → válaszd az Asztalt.</td></tr>
     </tbody>
   </table>
@@ -205,6 +215,8 @@
   <p>Ingyenes, nincs fiók, nincs reklám, nem gyűjt rólad semmit. Nincs trükk.</p>
   <h3>Csak YouTube?</h3>
   <p>Nem – a legtöbb videós és zenés oldal megy. Illeszd be a linket, és próbáld ki.</p>
+  <h3>Jó minőségű lesz a videó?</h3>
+  <p>Igen, 1080p-ig teljesen. A Yoinker alapból olyan kódolást választ (H.264), amit <em>minden</em> eszköz lejátszik. Ha valakinek 4K AV1 kell, és tudja, mit csinál: Haladó fül → „Legjobb minőség”.</p>
   <h3>Angolul indult el.</h3>
   <p>Az ablak bal alsó sarkában van a <strong>Nyelv</strong> választó. Állítsd „Magyar”-ra, megjegyzi.</p>
   <h3>Múlt hónapban ment, most nem.</h3>

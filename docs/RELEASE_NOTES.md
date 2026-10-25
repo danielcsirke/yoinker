@@ -8,6 +8,13 @@ Step-by-step with every click: [English guide](https://github.com/danielcsirke/y
 
 ---
 
+## 1.1.0
+
+- **Videos now play on every Windows PC, TV and phone.** The default is H.264 + AAC in MP4. Before, YouTube's "best" stream was often AV1/VP9, which Windows Media Player shows as a broken file.
+- **New Advanced tab** for those who want it: best-quality codecs (AV1/VP9), MKV/WebM, MP3/M4A/Opus/FLAC/WAV with bitrate, cover art, subtitles, login taken from your browser (fixes "needs a login" / age-restricted), file-name pattern, speed limit, raw yt-dlp and FFmpeg arguments. Saved automatically; one button resets everything.
+- A wrong Advanced setting is reported in plain words instead of failing silently.
+- Built with the newest yt-dlp.
+
 ## 1.0.1
 
 - Yoinker has a logo now: in the window title bar, as the .exe / .app icon, and on the website.

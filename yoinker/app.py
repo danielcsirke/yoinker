@@ -1,4 +1,4 @@
-"""The Yoinker window. Three numbered steps and one big button."""
+"""The Yoinker window. Three numbered steps and one big button, plus an Advanced tab."""
 
 import os
 import queue
@@ -11,6 +11,9 @@ from pathlib import Path
 from tkinter import filedialog, ttk
 
 from yoinker import APP_NAME, __version__, config
+from yoinker.config import (
+    ADVANCED_DEFAULTS, AUDIO_BITRATES, AUDIO_FORMATS, BROWSERS, CONTAINERS,
+)
 from yoinker.downloader import Job, looks_like_link
 from yoinker.i18n import LANGUAGES, detect_language, tr
 
@@ -55,15 +58,21 @@ class YoinkerApp(tk.Tk):
         self.playlist = tk.BooleanVar(value=False)
         self.lang_var = tk.StringVar(value=LANGUAGES[self.lang])
 
+        # One Tk variable per advanced setting, same keys as config.ADVANCED_DEFAULTS.
+        self.adv: dict[str, tk.Variable] = {}
+        for key, value in config.advanced(self.settings).items():
+            self.adv[key] = (tk.BooleanVar if isinstance(value, bool) else tk.StringVar)(value=value)
+
         self.job: Job | None = None
         self.events: queue.Queue = queue.Queue()
         self.widgets: dict[str, tk.Widget] = {}
 
-        self.minsize(560, 420)
-        self.resizable(True, False)
+        self.minsize(600, 520)
         self._set_icon()
         self._build()
         self._apply_texts()
+        for var in self.adv.values():
+            var.trace_add("write", lambda *_: self._save_advanced())
         self.protocol("WM_DELETE_WINDOW", self._on_close)
         self.after(100, self._poll_events)
 
@@ -79,8 +88,36 @@ class YoinkerApp(tk.Tk):
             pass  # no icon is better than no window
 
     def _build(self):
-        root = ttk.Frame(self, padding=PAD * 2)
-        root.pack(fill="both", expand=True)
+        outer = ttk.Frame(self, padding=(PAD * 2, PAD * 2, PAD * 2, PAD))
+        outer.pack(fill="both", expand=True)
+
+        self.notebook = ttk.Notebook(outer)
+        self.notebook.pack(fill="both", expand=True)
+        simple = ttk.Frame(self.notebook, padding=PAD)
+        advanced = ttk.Frame(self.notebook, padding=PAD)
+        self.notebook.add(simple)
+        self.notebook.add(advanced)
+        self._build_simple(simple)
+        self._build_advanced(advanced)
+
+        # Footer: language + version
+        footer = ttk.Frame(outer)
+        footer.pack(fill="x", pady=(PAD, 0))
+        footer.columnconfigure(2, weight=1)
+        w = self.widgets
+        w["language"] = ttk.Label(footer)
+        w["language"].grid(row=0, column=0, sticky="w")
+        lang_box = ttk.Combobox(footer, textvariable=self.lang_var, state="readonly",
+                                values=list(LANGUAGES.values()), width=10)
+        lang_box.grid(row=0, column=1, sticky="w", padx=(6, 0))
+        lang_box.bind("<<ComboboxSelected>>", self._lang_changed)
+        w["about"] = ttk.Label(footer, foreground="gray")
+        w["about"].grid(row=0, column=2, sticky="e")
+
+        self.url_entry.focus_set()
+        self.bind("<Return>", lambda _e: self._download())
+
+    def _build_simple(self, root):
         root.columnconfigure(0, weight=1)
         w = self.widgets
 
@@ -134,7 +171,7 @@ class YoinkerApp(tk.Tk):
         w["download"].grid(row=6, column=0, sticky="ew")
         self.progress = ttk.Progressbar(root, mode="determinate", maximum=100)
         self.progress.grid(row=7, column=0, sticky="ew", pady=(PAD, 4))
-        self.status = ttk.Label(root, font=STATUS_FONT, wraplength=520, justify="left")
+        self.status = ttk.Label(root, font=STATUS_FONT, wraplength=540, justify="left")
         self.status.grid(row=8, column=0, sticky="w")
         after = ttk.Frame(root)
         after.grid(row=9, column=0, sticky="w", pady=(6, 0))
@@ -148,22 +185,76 @@ class YoinkerApp(tk.Tk):
         w["details"].grid(row=10, column=0, sticky="w", pady=(PAD * 2, 0))
         self.log = tk.Text(root, height=8, state="disabled", font=("TkFixedFont", 9))
         self.log_row = 11
+        root.rowconfigure(self.log_row, weight=1)
 
-        # Footer: language + version
-        footer = ttk.Frame(root)
-        footer.grid(row=12, column=0, sticky="ew", pady=(PAD * 2, 0))
-        footer.columnconfigure(2, weight=1)
-        w["language"] = ttk.Label(footer)
-        w["language"].grid(row=0, column=0, sticky="w")
-        lang_box = ttk.Combobox(footer, textvariable=self.lang_var, state="readonly",
-                                values=list(LANGUAGES.values()), width=10)
-        lang_box.grid(row=0, column=1, sticky="w", padx=(6, 0))
-        lang_box.bind("<<ComboboxSelected>>", self._lang_changed)
-        w["about"] = ttk.Label(footer, foreground="gray")
-        w["about"].grid(row=0, column=2, sticky="e")
+    def _build_advanced(self, root):
+        root.columnconfigure(1, weight=1)
+        w = self.widgets
+        a = self.adv
+        row = 0
 
-        self.url_entry.focus_set()
-        self.bind("<Return>", lambda _e: self._download())
+        w["adv_intro"] = ttk.Label(root, wraplength=540, foreground="gray")
+        w["adv_intro"].grid(row=row, column=0, columnspan=2, sticky="w", pady=(0, PAD))
+        row += 1
+
+        w["adv_codec"] = ttk.Label(root)
+        w["adv_codec"].grid(row=row, column=0, sticky="nw", pady=4)
+        codec = ttk.Frame(root)
+        codec.grid(row=row, column=1, sticky="w", pady=4)
+        w["codec_compat"] = ttk.Radiobutton(codec, variable=a["codec"], value="compat")
+        w["codec_compat"].grid(row=0, column=0, sticky="w")
+        w["codec_best"] = ttk.Radiobutton(codec, variable=a["codec"], value="best")
+        w["codec_best"].grid(row=1, column=0, sticky="w")
+        row += 1
+
+        w["adv_container"] = ttk.Label(root)
+        w["adv_container"].grid(row=row, column=0, sticky="w", pady=4)
+        ttk.Combobox(root, textvariable=a["container"], values=CONTAINERS,
+                     state="readonly", width=8).grid(row=row, column=1, sticky="w", pady=4)
+        row += 1
+
+        w["adv_audio"] = ttk.Label(root)
+        w["adv_audio"].grid(row=row, column=0, sticky="w", pady=4)
+        audio = ttk.Frame(root)
+        audio.grid(row=row, column=1, sticky="w", pady=4)
+        ttk.Combobox(audio, textvariable=a["audio_format"], values=AUDIO_FORMATS,
+                     state="readonly", width=8).grid(row=0, column=0)
+        ttk.Combobox(audio, textvariable=a["audio_bitrate"], values=AUDIO_BITRATES,
+                     state="readonly", width=6).grid(row=0, column=1, padx=(6, 0))
+        ttk.Label(audio, text="kbps").grid(row=0, column=2, padx=(4, 0))
+        row += 1
+
+        w["adv_thumbnail"] = ttk.Checkbutton(root, variable=a["thumbnail"])
+        w["adv_thumbnail"].grid(row=row, column=0, columnspan=2, sticky="w", pady=4)
+        row += 1
+
+        subs = ttk.Frame(root)
+        subs.grid(row=row, column=0, columnspan=2, sticky="w", pady=4)
+        w["adv_subtitles"] = ttk.Checkbutton(subs, variable=a["subtitles"])
+        w["adv_subtitles"].grid(row=0, column=0, sticky="w")
+        ttk.Entry(subs, textvariable=a["subtitle_lang"], width=10).grid(row=0, column=1, padx=(6, 12))
+        w["adv_embed_subtitles"] = ttk.Checkbutton(subs, variable=a["embed_subtitles"])
+        w["adv_embed_subtitles"].grid(row=0, column=2, sticky="w")
+        row += 1
+
+        w["adv_cookies"] = ttk.Label(root)
+        w["adv_cookies"].grid(row=row, column=0, sticky="w", pady=(4, 0))
+        self.cookies_box = ttk.Combobox(root, state="readonly", width=10)
+        self.cookies_box.grid(row=row, column=1, sticky="w", pady=(4, 0))
+        self.cookies_box.bind("<<ComboboxSelected>>", self._cookies_changed)
+        row += 1
+        w["adv_cookies_hint"] = ttk.Label(root, wraplength=540, foreground="gray")
+        w["adv_cookies_hint"].grid(row=row, column=0, columnspan=2, sticky="w", pady=(0, 4))
+        row += 1
+
+        for key in ("filename", "rate_limit", "extra_ytdlp", "extra_ffmpeg"):
+            w["adv_" + key] = ttk.Label(root)
+            w["adv_" + key].grid(row=row, column=0, sticky="w", pady=4)
+            ttk.Entry(root, textvariable=a[key]).grid(row=row, column=1, sticky="ew", pady=4)
+            row += 1
+
+        w["adv_reset"] = ttk.Button(root, command=self._reset_advanced)
+        w["adv_reset"].grid(row=row, column=0, columnspan=2, sticky="w", pady=(PAD, 0))
 
     def _apply_texts(self):
         """Set every label in the current language (called on language change)."""
@@ -174,9 +265,13 @@ class YoinkerApp(tk.Tk):
                 widget.configure(text=t("about", version=__version__))
             else:
                 widget.configure(text=t(key))
+        self.notebook.tab(0, text="  " + t("tab_download") + "  ")
+        self.notebook.tab(1, text="  " + t("tab_advanced") + "  ")
         self.quality_keys = ["best", "1080", "720", "480"]
         self.quality_box["values"] = [t("q_" + k) for k in self.quality_keys]
         self.quality_box.current(self.quality_keys.index(self.quality.get()))
+        self.cookies_box["values"] = [t("cookies_none")] + BROWSERS[1:]
+        self.cookies_box.current(BROWSERS.index(self.adv["cookies_browser"].get()))
         self._kind_changed()
         if self.job is None:
             self._set_status("status_ready")
@@ -198,6 +293,9 @@ class YoinkerApp(tk.Tk):
     def _quality_changed(self, _event=None):
         self.quality.set(self.quality_keys[self.quality_box.current()])
 
+    def _cookies_changed(self, _event=None):
+        self.adv["cookies_browser"].set(BROWSERS[self.cookies_box.current()])
+
     def _lang_changed(self, _event=None):
         for code, name in LANGUAGES.items():
             if name == self.lang_var.get():
@@ -216,13 +314,24 @@ class YoinkerApp(tk.Tk):
             self.settings["folder"] = str(self.folder)
             config.save(self.settings)
 
+    def _advanced_values(self) -> dict:
+        return {key: var.get() for key, var in self.adv.items()}
+
+    def _save_advanced(self):
+        self.settings["advanced"] = self._advanced_values()
+        config.save(self.settings)
+
+    def _reset_advanced(self):
+        for key, value in ADVANCED_DEFAULTS.items():
+            self.adv[key].set(value)
+        self.cookies_box.current(0)
+
     def _toggle_details(self):
         self.details_open = not self.details_open
         if self.details_open:
-            self.log.grid(row=self.log_row, column=0, sticky="ew", pady=(4, 0))
+            self.log.grid(row=self.log_row, column=0, sticky="nsew", pady=(4, 0))
         else:
             self.log.grid_forget()
-        self.resizable(True, self.details_open)
 
     def _log(self, text: str):
         self.log.configure(state="normal")
@@ -245,12 +354,13 @@ class YoinkerApp(tk.Tk):
         if not looks_like_link(url):
             self._set_status("err_not_link")
             return
+        self.notebook.select(0)
         self.log.configure(state="normal")
         self.log.delete("1.0", "end")
         self.log.configure(state="disabled")
         self.progress["value"] = 0
         self.job = Job(url, self.kind.get(), self.quality.get(), self.folder,
-                       self.playlist.get(), self.events.put)
+                       self.playlist.get(), self.events.put, self._advanced_values())
         threading.Thread(target=self.job.run, daemon=True).start()
         self._busy(True)
 
@@ -298,7 +408,10 @@ class YoinkerApp(tk.Tk):
         elif kind == "error":
             _, err_key, detail = event
             self.progress["value"] = 0
-            self._set_status(err_key)
+            if err_key == "err_settings":
+                self.status.configure(text=tr(self.lang, err_key) + " " + detail)
+            else:
+                self._set_status(err_key)
             self._log(detail if detail.startswith("ERROR") else "ERROR: " + detail)
             if err_key == "err_blocked":
                 webbrowser.open(RELEASES_URL)
